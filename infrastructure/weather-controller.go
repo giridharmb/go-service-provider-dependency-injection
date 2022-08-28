@@ -18,14 +18,14 @@ func FetchWeather(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	apiDataProvider := providers.NewAPIData(weatherData.APIKey)
-	weatherService := service.NewWeatherUsecase(apiDataProvider)
-	weather, err := weatherService.FetchWeatherData(weatherData.City)
+	wqDetails := providers.NewWeatherQueryDetails(weatherData.APIKey, weatherData.City)
+	weather := service.NewWeatherST(wqDetails)
+	weatherDetails, err := weather.FetchWeatherDetailsV2()
 	if err != nil {
 		res.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(res).Encode(ErrorResponse{Message: "Could Not Fetch Weather"})
+		_ = json.NewEncoder(res).Encode(ErrorResponse{Message: "Could Not Fetch WeatherST"})
 		return
 	}
 	res.WriteHeader(http.StatusOK)
-	_ = json.NewEncoder(res).Encode(weather)
+	_ = json.NewEncoder(res).Encode(weatherDetails)
 }

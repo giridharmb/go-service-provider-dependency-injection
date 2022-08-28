@@ -141,21 +141,30 @@ Above commands compiles the code and generated 'service-provider' binary
 #### Get Output From Command Line
 
 ```bash
-$ ./service-provider -operation cli -city "Paris" -apikey "<INSERT_APIKEY>"
-```
+*[master][~/git/goworkspace/src/dependency-injection]$ ./service-provider -version "v1" -operation "cli" -city "London" -apikey "<API_KEY>"
 
-`Output`
-
-```bash
-2022/08/28 13:11:55 @ provider : path : /weather?q=Paris&appid=<API_KEY_REDACTED>&units=metric
-2022/08/28 13:11:55 @ provider : completeURL : https://api.openweathermap.org/data/2.5/weather?q=Paris&appid=<API_KEY_REDACTED>&units=metric
-2022/08/28 13:11:56 WeatherUsecase >
+2022/08/28 16:41:10 @ provider : path : /weather?q=London&appid=<API_KEY>&units=metric
+2022/08/28 16:41:10 @ provider : completeURL : https://api.openweathermap.org/data/2.5/weather?q=London&appid=<API_KEY>&units=metric
+2022/08/28 16:41:11 WeatherUsecase (1) >
 
 {
-    "Temp": 22.72,
-    "Pressure": 1017,
-    "MinTemp": 21.11,
-    "MaxTemp": 23.41
+    "Temp": 16.28,
+    "Pressure": 1022,
+    "MinTemp": 14.2,
+    "MaxTemp": 17.64
+}
+
+*[master][~/git/goworkspace/src/dependency-injection]$ ./service-provider -version "v2" -operation "cli" -city "London" -apikey "<API_KEY>"
+
+2022/08/28 16:41:14 @ provider : path : /weather?q=London&appid=<API_KEY>&units=metric
+2022/08/28 16:41:14 @ provider : completeURL : https://api.openweathermap.org/data/2.5/weather?q=London&appid=<API_KEY>&units=metric
+2022/08/28 16:41:15 WeatherUsecase (2) >
+
+{
+    "Temp": 16.28,
+    "Pressure": 1022,
+    "MinTemp": 14.09,
+    "MaxTemp": 17.64
 }
 ```
 
@@ -171,9 +180,7 @@ Mux HTTP server running on port :8181
 `Make HTTP POST Call`
 
 ```bash
-$ curl \
--X POST http://localhost:8181/weather \
--d '{"city":"London","apikey":"<API_KEY>"}' 2>/dev/null | python -m json.tool
+$ curl -X POST http://localhost:8181/weather -d '{"city":"London","apikey":"<API_KEY>"}' 2>/dev/null | python -m json.tool
 ````
 
 `Output`
