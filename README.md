@@ -135,10 +135,13 @@ That is Get() method -> without making changes to the usecase package
 go build -o service-provider
 ```
 
+Above commands compiles the code and generated 'service-provider' binary
+
+
 #### Get Output From Command Line
 
 ```bash
-[~/git/goworkspace/src/dependency-injection]$ ./service-provider -operation cli -city "Paris" -apikey "<INSERT_APIKEY>"
+$ ./service-provider -operation cli -city "Paris" -apikey "<INSERT_APIKEY>"
 ```
 
 `Output`
@@ -161,14 +164,16 @@ go build -o service-provider
 `Start HTTP Server`
 
 ```bash
-[~/git/goworkspace/src/dependency-injection]$ ./service-provider -operation api
+$ ./service-provider -operation api
 Mux HTTP server running on port :8181
 ```
 
 `Make HTTP POST Call`
 
 ```bash
-[~/git/goworkspace/src/dependency-injection]$ curl -X POST http://localhost:8181/weather -d '{"city":"London","apikey":"<API_KEY>"}' 2>/dev/null | python -m json.tool
+$ curl \
+-X POST http://localhost:8181/weather \
+-d '{"city":"London","apikey":"<API_KEY>"}' 2>/dev/null | python -m json.tool
 ````
 
 `Output`
